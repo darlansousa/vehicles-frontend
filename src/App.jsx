@@ -4,6 +4,7 @@ import {
   Flex,
   Button,
   useDisclosure,
+  TableContainer,
   Table,
   Thead,
   Tr,
@@ -11,6 +12,7 @@ import {
   Tbody,
   Td,
   useBreakpointValue,
+  Heading
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ModalComp from "./components/ModalComp";
@@ -62,15 +64,16 @@ const App = () => {
       align="center"
       justify="center"
       fontSize="20px"
-      fontFamily="poppins"
     >
-      <Box maxW={800} w="100%" h="100vh" py={10} px={2}>
-        <Button colorScheme="blue" onClick={() => [setDataEdit({}), onOpen()]}>
-          NOVO
+      <Box maxW={1200} w="100%" h="100vh" py={10} px={2}>
+      <Heading mb={4}>Cadastro de veículos</Heading>
+        <Button colorScheme="green" onClick={() => [setDataEdit({}), onOpen()]}>
+          NOVO VEÍCULO
         </Button>
 
         <Box overflowY="auto" height="100%">
-          <Table mt="6">
+        <TableContainer>
+          <Table mt="6" variant='simple'>
             <Thead>
               <Tr>
                 <Th maxW={isMobile ? 5 : 100} fontSize="15px">
@@ -91,7 +94,18 @@ const App = () => {
             </Thead>
             <Tbody>
               {vehicles.map(({ id, vehicle, brand, year, color, description, wasSold }, index) => (
-                <Tr key={index} cursor="pointer " _hover={{ bg: "gray.100" }}>
+                <Tr key={index} cursor="pointer " _hover={{ bg: "gray.100" }} onClick={() => [
+                  setDataEdit({
+                    id : id,
+                    vehicle: vehicle, 
+                    brandId: brand.id, 
+                    year : year, 
+                    color : color, 
+                    description : description, 
+                    wasSold: wasSold
+                  }),
+                  onOpen(),
+                ]}>
                   <Td maxW={isMobile ? 5 : 100}>{id}</Td>
                   <Td maxW={isMobile ? 5 : 100}>{vehicle}</Td>
                   <Td maxW={isMobile ? 5 : 100}>{description}</Td>
@@ -123,6 +137,7 @@ const App = () => {
               ))}
             </Tbody>
           </Table>
+          </TableContainer>
         </Box>
       </Box>
       {isOpen && (

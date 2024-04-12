@@ -33,6 +33,9 @@ const ModalComp = ({ data, setData, dataEdit, isOpen, onClose }) => {
       );
       const data = await response.json();
       setBrands(data);
+      if((!brandId || brandId == "") && data.length > 0) {
+        setBrand(data[0].id)
+      }
     };
     fetchBrands();
   }, []);
